@@ -1,7 +1,7 @@
 package com.portfolio.demo.controller
 
-import com.portfolio.demo.model.Person
-import com.portfolio.demo.service.api.PersonServiceAPI
+import com.portfolio.demo.model.AboutMe
+import com.portfolio.demo.service.api.AboutMeServiceAPI
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,32 +15,32 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/person")
+@RequestMapping("/api/about-me")
 @CrossOrigin("*")
-class PersonController {
+class AboutMeController {
     @Autowired
-    lateinit var personServiceAPI: PersonServiceAPI
+    lateinit var aboutMeServiceAPI: AboutMeServiceAPI
 
     @GetMapping("/all")
-    fun getAll() : MutableList<Person>? {
-        return personServiceAPI.all
+    fun getAll() : MutableList<AboutMe>? {
+        return aboutMeServiceAPI.all
     }
 
     @PostMapping("/save")
-    fun save(@RequestBody person: Person): ResponseEntity<Person>{
-        var obj = personServiceAPI.save(person)
+    fun save(@RequestBody aboutMe: AboutMe): ResponseEntity<AboutMe>{
+        var obj = aboutMeServiceAPI.save(aboutMe)
 
-        return ResponseEntity<Person>(person, HttpStatus.OK)
+        return ResponseEntity<AboutMe>(aboutMe, HttpStatus.OK)
     }
 
     @DeleteMapping("/delete/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Person>{
-        val personForDelete = personServiceAPI.get(id)
-        if(personForDelete != null){
-            personServiceAPI.delete(id)
+    fun delete(@PathVariable id: Long): ResponseEntity<AboutMe>{
+        val aboutMeForDelete = aboutMeServiceAPI[id]
+        if(aboutMeForDelete != null){
+            aboutMeServiceAPI.delete(id)
         }else{
-            ResponseEntity<Person>(HttpStatus.NO_CONTENT)
+            ResponseEntity<AboutMe>(HttpStatus.NO_CONTENT)
         }
-        return ResponseEntity(personForDelete, HttpStatus.OK)
+        return ResponseEntity(aboutMeForDelete, HttpStatus.OK)
     }
 }
